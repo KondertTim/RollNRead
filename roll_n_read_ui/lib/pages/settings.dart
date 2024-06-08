@@ -5,7 +5,6 @@ class Settings extends StatefulWidget {
 
   @override
   State<Settings> createState() => _SettingsState();
-
   }
 
 class _SettingsState extends State<Settings>{
