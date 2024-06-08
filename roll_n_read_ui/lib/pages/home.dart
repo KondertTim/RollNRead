@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:roll_n_read/models/colorThemeList.dart';
-import 'package:roll_n_read/models/textFormatting.dart';
 
 class Home extends StatefulWidget {
   const Home({super.key});
