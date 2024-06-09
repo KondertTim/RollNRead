@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
-import 'package:roll_n_read/main.dart';
 import 'package:roll_n_read/widgets/roundIconContainer.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -20,10 +19,10 @@ class _SettingsPageState extends State<SettingsPage>{
   Widget build(BuildContext context) {
     return Scaffold(
         body: ListView(
-          padding: EdgeInsets.all(24),
+          padding: const EdgeInsets.all(24),
           children: [
             buildDarkMode(),
-            Column(children: [
+            const Column(children: [
               Text("Settings")
             ],)
 
@@ -34,7 +33,7 @@ class _SettingsPageState extends State<SettingsPage>{
   Widget buildDarkMode() => SwitchSettingsTile(
     activeColor: Colors.white,
       showDivider: true,
-      leading: RoundIconContainer(icon: Icons.dark_mode, color: Colors.indigo, iconColor: Colors.white),
+      leading: const RoundIconContainer(icon: Icons.dark_mode, color: Colors.indigo, iconColor: Colors.white),
       title: 'Dark Mode',
       settingKey: SettingsPage.keyDarkMode,
       onChange: (_){},
