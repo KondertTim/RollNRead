@@ -11,6 +11,13 @@ class ColorThemeList{
 
   ];
 
+    final darkColors = <Color>[
+      const Color(0xff651e3e),
+      const Color(0xff451e3e),
+      const Color(0xff251e3e),
+      const Color(0xff051e3e)
+    ];
+
 
 
 }

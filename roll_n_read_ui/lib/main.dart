@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:roll_n_read/models/colorThemeList.dart';
-import 'package:roll_n_read/models/textFormatting.dart';
+import 'package:roll_n_read/widgets/textWithOutline.dart';
 import 'package:roll_n_read/pages/home.dart';
 import 'package:roll_n_read/pages/profile.dart';
 import 'package:roll_n_read/pages/scan.dart';
-import 'package:roll_n_read/pages/settings.dart';
+import 'package:roll_n_read/pages/settings_page.dart';
 
-void main() {
+Future main() async{
+  await Settings.init(cacheProvider: SharePreferenceCache());
+
   runApp(const RollNRead());
 }
 
@@ -23,65 +26,80 @@ class _RollNReadState extends State<RollNRead> {
     const Home(),
     const Scan(),
     const Profile(),
-    const Settings(),
+    const SettingsPage(),
   ];
-
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ValueChangeObserver<bool>(
+      cacheKey: SettingsPage.keyDarkMode,
+      defaultValue: true,
+      builder: (_, isDarkMode, __) => MaterialApp(
+              debugShowCheckedModeBanner: false,
+              theme: isDarkMode ?  ThemeData.dark().copyWith(
+                scaffoldBackgroundColor: Colors.black87,
+                brightness: Brightness.dark,
+                canvasColor: Colors.transparent,
+                colorScheme: ColorScheme.fromSwatch(
+                  primarySwatch: Colors.indigo
+                )
+              )
+                  :
+                ThemeData.light().copyWith(
+                    scaffoldBackgroundColor: Colors.white70,
+                    brightness: Brightness.light,
+                    canvasColor: Colors.transparent,
 
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: ColorThemeList().colors[currentPageIndex],
-        appBar: AppBar(
-          backgroundColor: ColorThemeList().colors[currentPageIndex],
-          title: TextFormatting().textWithOutline("Roll & Read", FontWeight.w400, 2.5, Colors.white, Colors.black, 40 ,'DragonHunter'),
-          centerTitle: true,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.only(
+                ),
 
+              home: Scaffold(
+                backgroundColor: isDarkMode ? ColorThemeList().darkColors[currentPageIndex] : ColorThemeList().colors[currentPageIndex],
+                appBar: AppBar(
+                  backgroundColor: isDarkMode ? ColorThemeList().darkColors[currentPageIndex] : ColorThemeList().colors[currentPageIndex],
+                  title: isDarkMode ? TextFormatting().textWithOutline("Roll & Read", FontWeight.w400, 2.5, Colors.white, Colors.black, 40 ,'DragonHunter'):
+                  TextFormatting().textWithOutline("Roll & Read", FontWeight.w400, 6, Colors.black, Colors.white, 40 ,'DragonHunter'),
+                  centerTitle: true,
+                ),
+
+                body: Container(
+                  padding: const EdgeInsets.all(2.0), // Padding to create space for the border
+                  decoration: BoxDecoration(
+                    color: Colors.white70, // Border color
+                    borderRadius: BorderRadius.circular(50.0), // Rounded edges
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(50),
+                    child: IndexedStack(
+                      index: currentPageIndex,
+                      children: screens,
+                    ),
+                  ),
+                ),
+
+
+                bottomNavigationBar: BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  backgroundColor: isDarkMode ? ColorThemeList().darkColors[currentPageIndex] : ColorThemeList().colors[currentPageIndex],
+                  selectedItemColor: Colors.white,
+                  unselectedItemColor: Colors.white70,
+                  iconSize: 35,
+                  showUnselectedLabels: false,
+                  items: const [
+                    BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
+                    BottomNavigationBarItem(label: 'Scan', icon: Icon(Icons.camera_alt_rounded)),
+                    BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
+                    BottomNavigationBarItem(label: 'Settings', icon: Icon(Icons.settings)),
+                  ],
+                  currentIndex: currentPageIndex,
+                  onTap: (int index){
+                    setState(() {
+                      currentPageIndex = index;
+                    });
+                  },
+                ),
+              ),
             )
-          ),
-        ),
 
-        body: Container(
-          padding: const EdgeInsets.all(2.0), // Padding to create space for the border
-          decoration: BoxDecoration(
-            color: Colors.white70, // Border color
-            borderRadius: BorderRadius.circular(50.0), // Rounded edges
-          ),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(50),
-            child: IndexedStack(
-              index: currentPageIndex,
-              children: screens,
-            ),
-          ),
-        ),
-
-
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: ColorThemeList().colors[currentPageIndex],
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          iconSize: 35,
-          showUnselectedLabels: false,
-          items: const [
-            BottomNavigationBarItem(label: 'Home', icon: Icon(Icons.home)),
-            BottomNavigationBarItem(label: 'Scan', icon: Icon(Icons.camera_alt_rounded)),
-            BottomNavigationBarItem(label: 'Profile', icon: Icon(Icons.person)),
-            BottomNavigationBarItem(label: 'Settings', icon: Icon(Icons.settings)),
-          ],
-          currentIndex: currentPageIndex,
-          onTap: (int index){
-            setState(() {
-              currentPageIndex = index;
-            });
-          },
-        ),
-      ),
     );
   }
 }
