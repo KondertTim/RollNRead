@@ -21,17 +21,17 @@ class _HomeState extends State<Home> {
         body: Container(
           decoration: BoxDecoration(
             image: DecorationImage(
-                image: isDarkMode ? AssetImage("assets/images/dungeonWallDark.jpg"):AssetImage("assets/images/dungeonWallMossy.jpg"),
+                image: isDarkMode ? const AssetImage("assets/images/dungeonWallDark.jpg"):const AssetImage("assets/images/dungeonWallMossy.jpg"),
                 fit: BoxFit.cover),
           ),
           child: Center(
             child: Container(
-              padding: EdgeInsets.all(2.0), // Padding to create space for the border
+              padding: const EdgeInsets.all(2.0), // Padding to create space for the border
               decoration: BoxDecoration(
                 color: Colors.black, // Border color
                 borderRadius: BorderRadius.circular(180.0), // Rounded edges
               ),
-              child: CenterAudioButton(),
+              child: const CenterAudioButton(),
             )
           ),
         ),
