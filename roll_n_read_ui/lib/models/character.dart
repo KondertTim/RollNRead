@@ -40,6 +40,7 @@ class Character{
     skills[index].proficient = true;
   }
 
+  //Creates a list of skills with default value (false)
   static List<Skill> createEmptySkillList(){
     List<Skill> createdSkills = [];
     createdSkills.add(Skill("Acrobatics", false, Ability.dex));
@@ -63,6 +64,7 @@ class Character{
     return createdSkills;
   }
 
+  //Creates a list of stats with default value (0)
   static List<Stat> createEmptyStatList(){
     List<Stat> createdStats = [];
     createdStats.add(Stat("Str", Ability.str, 0));
@@ -74,6 +76,7 @@ class Character{
     return createdStats;
   }
 
+  //Creates a list of saving throws with default value (false)
   static List<SavingThrow> createEmptySavingThrowList(){
     List<SavingThrow> createdSavingThrows = [];
     createdSavingThrows.add(SavingThrow("Strength", false, Ability.str));

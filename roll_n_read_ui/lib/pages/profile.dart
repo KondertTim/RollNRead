@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:roll_n_read/logic/logic.dart';
 import 'package:roll_n_read/models/character.dart';
 import 'package:roll_n_read/models/savingThrow.dart';
 import 'package:roll_n_read/models/skill.dart';
@@ -98,6 +99,7 @@ class _CharCreatorState extends State<CharCreator> {
                 setState(() {
                   character = Character(nameController.text, selectedClass, 2,
                       stats, savingThrows, skills);
+                  Logic.character = character;
                   Settings.setValue(CharCreator.keyCharCreated, true,
                       notify: true);
                 });

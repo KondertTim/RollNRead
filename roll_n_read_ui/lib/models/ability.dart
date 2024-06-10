@@ -1,3 +1,4 @@
+//Abilities of a character
 enum Ability{
   dex('Dexterity'),
   wis('Wisdom'),
