@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:roll_n_read/models/character.dart';
+import 'package:roll_n_read/models/savingThrow.dart';
+import 'package:roll_n_read/models/skill.dart';
+import 'package:roll_n_read/models/stat.dart';
 
 import '../models/class.dart';
 
@@ -69,9 +72,9 @@ class _CharCreatorState extends State<CharCreator> {
   int currentStep = 0;
   bool charExists = false;
 
-  List<int> stats = List.generate(6, (index) => 1, growable: false);
-  List<bool> savingThrows = List.generate(6, (index) => false, growable: false);
-  List<bool> skills = List.generate(18, (index) => false, growable: false);
+  List<Stat> stats = Character.createEmptyStatList();
+  List<SavingThrow> savingThrows = Character.createEmptySavingThrowList();
+  List<Skill> skills = Character.createEmptySkillList();
   int profBonus = 0;
 
   final TextEditingController nameController = TextEditingController();
@@ -218,10 +221,10 @@ class _CharCreatorState extends State<CharCreator> {
       width: 320,
       child: CheckboxListTile(
         title: Text(proficiency),
-        value: savingThrows[index],
+        value: savingThrows[index].proficient,
         onChanged: (bool? newValue) {
           setState(() {
-            savingThrows[index] = newValue!;
+            savingThrows[index].proficient = newValue!;
           });
         },
       ),
@@ -233,10 +236,10 @@ class _CharCreatorState extends State<CharCreator> {
       width: 320,
       child: CheckboxListTile(
         title: Text(proficiency),
-        value: skills[index],
+        value: skills[index].proficient,
         onChanged: (bool? newValue) {
           setState(() {
-            skills[index] = newValue!;
+            skills[index].proficient = newValue!;
           });
         },
       ),
@@ -321,7 +324,7 @@ class _CharCreatorState extends State<CharCreator> {
           CupertinoButton(
             padding: const EdgeInsets.only(bottom: 0),
             child: Text(
-              "${stats[index]}",
+              "${stats[index].abilityScore}",
               style: const TextStyle(
                 fontFamily: "DragonHunter",
                 fontSize: 30,
@@ -345,7 +348,7 @@ class _CharCreatorState extends State<CharCreator> {
                             growable: false),
                         onSelectedItemChanged: (int value) {
                           setState(() {
-                            stats[index] = value + 1;
+                            stats[index].abilityScore = value + 1;
                           });
                         },
                       ),
@@ -355,7 +358,7 @@ class _CharCreatorState extends State<CharCreator> {
             height: 8,
           ),
           Text(
-            "${((stats[index] - 10.5) / 2).round()}",
+            "${stats[index].modifier()}",
             style: const TextStyle(
               fontFamily: "DragonHunter",
               fontSize: 20,
