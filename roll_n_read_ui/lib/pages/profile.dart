@@ -278,7 +278,7 @@ class _CharCreatorState extends State<CharCreator> {
                               10,
                               (index) => Center(
                                       child: Text(
-                                    "$index",
+                                    "$index", style: TextStyle(color: Colors.black),
                                   )),
                               growable: false),
                           onSelectedItemChanged: (int value) {
@@ -314,6 +314,7 @@ class _CharCreatorState extends State<CharCreator> {
           Text(
             stat,
             style: const TextStyle(
+              color: Colors.black,
               fontFamily: "DragonHunter",
               fontSize: 25,
             ),
@@ -340,7 +341,7 @@ class _CharCreatorState extends State<CharCreator> {
                             20,
                             (index) => Center(
                                     child: Text(
-                                  "${index + 1}",
+                                  "${index + 1}",style: TextStyle(color: Colors.black),
                                 )),
                             growable: false),
                         onSelectedItemChanged: (int value) {
@@ -358,6 +359,7 @@ class _CharCreatorState extends State<CharCreator> {
             "${((stats[index] - 10.5) / 2).round()}",
             style: const TextStyle(
               fontFamily: "DragonHunter",
+              color: Colors.black,
               fontSize: 20,
             ),
           )
