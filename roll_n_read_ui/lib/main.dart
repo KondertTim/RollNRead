@@ -40,8 +40,17 @@ class _RollNReadState extends State<RollNRead> {
                 scaffoldBackgroundColor: Colors.black87,
                 brightness: Brightness.dark,
                 canvasColor: Colors.transparent,
-                colorScheme: ColorScheme.fromSwatch(
-                  primarySwatch: Colors.indigo
+                colorScheme: const ColorScheme(brightness: Brightness.dark,
+                    primary: Colors.indigo,
+                    onPrimary: Colors.white,
+                    secondary: Colors.indigo,
+                    onSecondary: Colors.black,
+                    error: Colors.red,
+                    onError: Colors.yellow,
+                    surface: Colors.teal,
+                    onSurface: Colors.white70,
+
+
                 )
               )
                   :
