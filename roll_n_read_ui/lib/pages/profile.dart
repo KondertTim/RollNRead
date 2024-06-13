@@ -100,6 +100,7 @@ class _CharCreatorState extends State<CharCreator> {
                   character = Character(nameController.text, selectedClass, 2,
                       stats, savingThrows, skills);
                   Logic.character = character;
+                  Logic.rollTest();
                   Settings.setValue(CharCreator.keyCharCreated, true,
                       notify: true);
                 });
