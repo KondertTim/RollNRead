@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:roll_n_read/logic/voice.dart';
 import 'package:roll_n_read/models/colorThemeList.dart';
 import 'package:roll_n_read/pages/settings_page.dart';
 
@@ -85,7 +86,8 @@ class _CenterAudioButtonState extends State<CenterAudioButton> {
                * TODO: Add Center-Audio-Button functionality
                */
               onPressed: (){
-
+                Voice voice = Voice();
+                voice.listen();
 
                 },
               child: Icon(Icons.mic_outlined, size: 250,color: isDarkMode ? Colors.black54 : Colors.white60),

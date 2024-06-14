@@ -11,7 +11,7 @@ class Logic{
 
   //Return final points
   static int getFinalPoints(int rolled){
-    //gets points by voic command, adds the number of dice and returns 
+    //gets points by voice command, adds the number of dice and returns
     return getPointsByCommand() + rolled;
   }
 
