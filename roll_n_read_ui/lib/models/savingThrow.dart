@@ -8,7 +8,8 @@ class SavingThrow{
 
   SavingThrow(this.name, this.proficient, this.ability);
 
-   Map<String, dynamic> toJson() {
+  //Converts the class to json
+  Map<String, dynamic> toJson() {
     return {
       'name': name,
       'proficient': proficient,
@@ -16,6 +17,7 @@ class SavingThrow{
     };
   }
 
+  //Converts json to class
   SavingThrow.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         proficient = json['proficient'],

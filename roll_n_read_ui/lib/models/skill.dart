@@ -8,6 +8,7 @@ class Skill{
 
   Skill(this.name, this.proficient, this.ability);
 
+  //Converts the class to json
   Map<String, dynamic> toJson() {
     return {
       'name': name,
@@ -16,6 +17,7 @@ class Skill{
     };
   }
 
+  //Converts json to class
    Skill.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         proficient = json['proficient'],

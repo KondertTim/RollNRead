@@ -22,6 +22,8 @@ class Character{
   Character(this.name, this.className, this.proficiencyBonus, this.stats,
       this.savingThrows, this.skills);
 
+
+  //Converts the class to json
   Map<String, dynamic> toJson() {
     List<Map> statsJson = stats.map((i) => i.toJson()).toList();
     List<Map> savingThrowsJson = savingThrows.map((i) => i.toJson()).toList();
@@ -37,6 +39,7 @@ class Character{
     };
   }
 
+  //Converts json to class
   Character.fromJson(Map<String, dynamic> json)
       : name = json['name'],
         className = ClassLabel.values.firstWhere((e) => e.toString() == json['className']),
