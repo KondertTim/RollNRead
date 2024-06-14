@@ -37,6 +37,8 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   flutter_settings_screens: ^0.3.4
+  speech_to_text: ^6.6.2
+  dartlang_utils: ^0.2.0
 
 dev_dependencies:
   flutter_test:
