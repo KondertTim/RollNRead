@@ -7,7 +7,7 @@ import 'package:speech_to_text/speech_to_text.dart';
 class Voice {
 
   bool _available = false;
-  Duration listenFor = const Duration(seconds: 10);
+  Duration listenFor = const Duration(seconds: 5);
   final SpeechToText speech = SpeechToText();
   Future<void> initialize() async {
     _available = await speech.initialize(onStatus: statusListener, onError: errorListener);
