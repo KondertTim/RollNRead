@@ -84,7 +84,7 @@ class _CharCreatorState extends State<CharCreator> {
 
   ClassLabel selectedClass = ClassLabel.paladin;
 
-  Character? character;
+  Character? character = Logic.character;
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -100,7 +100,7 @@ class _CharCreatorState extends State<CharCreator> {
                   character = Character(nameController.text, selectedClass, 2,
                       stats, savingThrows, skills);
                   Logic.character = character;
-                  Logic.rollTest();
+                  Logic.saveCharacterAsJson();
                   Settings.setValue(CharCreator.keyCharCreated, true,
                       notify: true);
                 });

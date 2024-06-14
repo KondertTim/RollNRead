@@ -7,7 +7,7 @@ enum Ability{
   cha('Charisma'),
   con('Constitution');
   
-  const Ability(this.className);
-  final String className;
+  const Ability(this.abilityName);
+  final String abilityName;
 
 }
