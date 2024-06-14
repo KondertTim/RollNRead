@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
+import 'package:roll_n_read/logic/voice.dart';
 import 'package:roll_n_read/models/colorThemeList.dart';
 import 'package:roll_n_read/widgets/textWithOutline.dart';
 import 'package:roll_n_read/pages/home.dart';
@@ -9,6 +10,8 @@ import 'package:roll_n_read/pages/settings_page.dart';
 
 Future main() async{
   await Settings.init(cacheProvider: SharePreferenceCache());
+  Voice voice =  Voice();
+  voice.initialize();
 
   runApp(const RollNRead());
 }
