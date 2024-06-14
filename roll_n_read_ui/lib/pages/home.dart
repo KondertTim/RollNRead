@@ -82,9 +82,6 @@ class _CenterAudioButtonState extends State<CenterAudioButton> {
                 elevation: 0
               ),
 
-              /**
-               * TODO: Add Center-Audio-Button functionality
-               */
               onPressed: (){
                 Voice voice = Voice();
                 voice.listen();

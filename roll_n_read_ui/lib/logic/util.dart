@@ -8,6 +8,7 @@ class Util {
   static List<Skill> skills = Character.createEmptySkillList();
   static List<SavingThrow> saves = Character.createEmptySavingThrowList();
 
+  //Match voice command to closest check/save using levenshtein distance
   static String getClosestMatch(String command) {
     int minDistance = levenshteinMax;
     String closestMatch = "";

@@ -32,7 +32,7 @@ class Logic{
         }
       }
 
-      //if the voic command was not found, then search in the skills
+      //if the voice command was not found, then search in the skills
       //iterate through skills list and search for the voice command
       for (var skill in character!.skills) {
         if(skill.name.toLowerCase() == command.toLowerCase()){

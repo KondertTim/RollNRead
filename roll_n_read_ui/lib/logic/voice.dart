@@ -9,6 +9,8 @@ class Voice {
   bool _available = false;
   Duration listenFor = const Duration(seconds: 5);
   final SpeechToText speech = SpeechToText();
+
+  //initialize speech to text only once during start
   Future<void> initialize() async {
     _available = await speech.initialize(onStatus: statusListener, onError: errorListener);
   }
@@ -20,6 +22,8 @@ class Voice {
         localeId: 'en_US');
   }
 
+  //Execute when recognizing speech
+  //TODO: forward to either camera scanning dice or result screen
   void resultListener(SpeechRecognitionResult result) {
     print(
         'Result listener final: ${result.finalResult}, '
@@ -27,12 +31,13 @@ class Voice {
     );
 
     if (result.finalResult){
+      //set closest matching command
       Logic.command = Util.getClosestMatch(result.recognizedWords);
+
+      //Testing with a roll of 10, can be removed
       int rollResult = Logic.getFinalPoints(10);
       print('Your roll for ${Logic.command} has a total of: $rollResult');
     }
-
-
   }
 
   void errorListener(SpeechRecognitionError error){
