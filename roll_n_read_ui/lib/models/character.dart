@@ -1,3 +1,4 @@
+import 'dart:convert';
 import 'package:roll_n_read/models/class.dart';
 import 'package:roll_n_read/models/ability.dart';
 import 'package:roll_n_read/models/savingThrow.dart';
@@ -20,6 +21,32 @@ class Character{
 
   Character(this.name, this.className, this.proficiencyBonus, this.stats,
       this.savingThrows, this.skills);
+
+
+  //Converts the class to json
+  Map<String, dynamic> toJson() {
+    List<Map> statsJson = stats.map((i) => i.toJson()).toList();
+    List<Map> savingThrowsJson = savingThrows.map((i) => i.toJson()).toList();
+    List<Map> skillsJson = skills.map((i) => i.toJson()).toList();
+
+    return {
+      'name': name,
+      'className': className.toString(),
+      'proficiencyBonus': proficiencyBonus,
+      'stats': statsJson,
+      "savingThrows": savingThrowsJson,
+      'skills': skillsJson
+    };
+  }
+
+  //Converts json to class
+  Character.fromJson(Map<String, dynamic> json)
+      : name = json['name'],
+        className = ClassLabel.values.firstWhere((e) => e.toString() == json['className']),
+        proficiencyBonus = json['proficiencyBonus'],
+        stats = (json['stats'] as List).map((i) => Stat.fromJson(i)).toList(),
+        savingThrows = (json['savingThrows'] as List).map((i) => SavingThrow.fromJson(i)).toList(),
+        skills = (json['skills'] as List).map((i) => Skill.fromJson(i)).toList();
 
   void setName(String name){
     this.name = name;

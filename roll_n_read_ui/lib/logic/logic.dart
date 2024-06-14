@@ -1,4 +1,6 @@
+import 'dart:convert';
 import 'dart:math';
+import 'package:roll_n_read/logic/characterStorage.dart';
 import 'package:roll_n_read/models/ability.dart';
 import 'package:roll_n_read/models/character.dart';
 import 'package:roll_n_read/models/stat.dart';
@@ -63,15 +65,23 @@ class Logic{
     return points;
   }
 
+  //Saves the character into a json File
+  static Future<void> saveCharacterAsJson() async {
+    var characterJson = jsonEncode(character!.toJson());
+    await CharacterStorage.writeCharacter(characterJson);
+  }
 
-  //Just Test
-  static void rollTest(){
-    var testCommand = ["Religion", "Medicine", "Strength", "Constitution", "Intelligence", "Wisdom", "Charisma", "History", "Investigation"];
-    var rng = Random();
-    for(int i = 0; i < 5; i++){
-      command = testCommand[rng.nextInt(10)];
-      int rolled = rng.nextInt(20) + 1;
-      print("${command}: ${getFinalPoints(rolled)}");
-    }
+  //Reads the character from a json File
+  static Future<Character?> readCharacterFromJson() async{
+      try {
+        var characterJson = await CharacterStorage.readCharacter();
+        Map<String, dynamic> j = jsonDecode(characterJson);
+        Character c = Character.fromJson(j);
+        character = c;
+        return character;
+      } catch (e) {
+        print("Error: ${e}");
+        return null;
+      }
   }
 }
