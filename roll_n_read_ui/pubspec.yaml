@@ -37,6 +37,40 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_svg: ^2.0.10+1
   flutter_settings_screens: ^0.3.4
+
+  opencv_dart: ^1.0.7
+  camera:
+    git:
+      url: https://github.com/flutter/packages.git
+      ref: main
+      path: ./packages/camera/camera
+  sensors_plus: ^5.0.1
+  vector_math: ^2.1.4
+  collection: ^1.18.0
+  google_mlkit_text_recognition: ^0.13.0
+  file: ^7.0.0
+
+dependency_overrides:
+  camera_android:
+    git:
+      url: https://github.com/flutter/packages.git
+      ref: main
+      path: ./packages/camera/camera_android
+  camera_android_camerax:
+    git:
+      url: https://github.com/flutter/packages.git
+      ref: main
+      path: ./packages/camera/camera_android_camerax
+  camera_avfoundation:
+    git:
+      url: https://github.com/flutter/packages.git
+      ref: main
+      path: ./packages/camera/camera_avfoundation
+  camera_platform_interface:
+    git:
+      url: https://github.com/flutter/packages.git
+      ref: main
+      path: ./packages/camera/camera_platform_interface
   speech_to_text: ^6.6.2
   dartlang_utils: ^0.2.0
 

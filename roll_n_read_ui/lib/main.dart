@@ -1,3 +1,4 @@
+import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_settings_screens/flutter_settings_screens.dart';
 import 'package:roll_n_read/logic/voice.dart';
@@ -8,11 +9,15 @@ import 'package:roll_n_read/pages/profile.dart';
 import 'package:roll_n_read/pages/scan.dart';
 import 'package:roll_n_read/pages/settings_page.dart';
 
+late List<CameraDescription> _cameras;
+
 Future main() async{
   await Settings.init(cacheProvider: SharePreferenceCache());
   Voice voice =  Voice();
   voice.initialize();
 
+  WidgetsFlutterBinding.ensureInitialized();
+  _cameras = await availableCameras();
   runApp(const RollNRead());
 }
 
@@ -27,7 +32,7 @@ class _RollNReadState extends State<RollNRead> {
   int currentPageIndex = 0;
   final screens = [
     const Home(),
-    const Scan(),
+    Scan(cameras: _cameras),
     const Profile(),
     const SettingsPage(),
   ];
