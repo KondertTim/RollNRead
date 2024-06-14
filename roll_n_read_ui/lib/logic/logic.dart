@@ -1,3 +1,4 @@
+import 'dart:math';
 import 'package:roll_n_read/models/ability.dart';
 import 'package:roll_n_read/models/character.dart';
 import 'package:roll_n_read/models/stat.dart';
@@ -64,21 +65,13 @@ class Logic{
 
 
   //Just Test
-  static void roll(){
-    command = "Religion";
-    int rolled = 10;
-    print("Religion: ${getFinalPoints(rolled)}");
-    
-    command = "strength";
-    rolled = 15;
-    print("strength: ${getFinalPoints(rolled)}");
-
-    command = "Constitution";
-    rolled = 7;
-    print("Constitution: ${getFinalPoints(rolled)}");
-
-    command = "Medicine";
-    rolled = 9;
-    print("Medicine: ${getFinalPoints(rolled)}");
+  static void rollTest(){
+    var testCommand = ["Religion", "Medicine", "Strength", "Constitution", "Intelligence", "Wisdom", "Charisma", "History", "Investigation"];
+    var rng = Random();
+    for(int i = 0; i < 5; i++){
+      command = testCommand[rng.nextInt(10)];
+      int rolled = rng.nextInt(20) + 1;
+      print("${command}: ${getFinalPoints(rolled)}");
+    }
   }
 }
