@@ -158,24 +158,32 @@ class _CharCreatorState extends State<CharCreator> {
             isActive: currentStep >= 1,
             title: const Text("Stats"),
             content: Column(
-              children: [
+              children: <Widget>[
                 profContainer(),
-                Row(
-                  children: [
-                    statContainer(0, "Str"),
-                    statContainer(1, "Dex"),
-                    statContainer(2, "Con"),
-                  ],
+                SizedBox(
+                  height: 153,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      statContainer(0, "Str"),
+                      statContainer(1, "Dex"),
+                      statContainer(2, "Con"),
+                    ],
+                  ),
                 ),
                 const SizedBox(
                   height: 5,
                 ),
-                Row(
-                  children: [
-                    statContainer(3, "Int"),
-                    statContainer(4, "Wis"),
-                    statContainer(5, "Cha"),
-                  ],
+                SizedBox(
+                  height: 153,
+                  child: ListView(
+                    scrollDirection: Axis.horizontal,
+                    children: <Widget>[
+                      statContainer(3, "Int"),
+                      statContainer(4, "Wis"),
+                      statContainer(5, "Cha"),
+                    ],
+                  ),
                 )
               ],
             )),
@@ -284,7 +292,7 @@ class _CharCreatorState extends State<CharCreator> {
                               10,
                               (index) => Center(
                                       child: Text(
-                                    "$index", style: TextStyle(color: Colors.black),
+                                    "$index", style: const TextStyle(color: Colors.black),
                                   )),
                               growable: false),
                           onSelectedItemChanged: (int value) {
@@ -347,7 +355,7 @@ class _CharCreatorState extends State<CharCreator> {
                             20,
                             (index) => Center(
                                     child: Text(
-                                  "${index + 1}",style: TextStyle(color: Colors.black),
+                                  "${index + 1}",style: const TextStyle(color: Colors.black),
                                 )),
                             growable: false),
                         onSelectedItemChanged: (int value) {

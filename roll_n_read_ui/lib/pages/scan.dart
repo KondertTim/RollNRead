@@ -8,7 +8,6 @@ import 'package:file/file.dart';
 import 'package:file/memory.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:motion_sensors/motion_sensors.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';

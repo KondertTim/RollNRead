@@ -50,6 +50,9 @@ dependencies:
   google_mlkit_text_recognition: ^0.13.0
   file: ^7.0.0
 
+  path_provider: any
+  dartlang_utils: any
+  speech_to_text: any
 dependency_overrides:
   camera_android:
     git:

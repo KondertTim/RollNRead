@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:math';
 import 'package:roll_n_read/logic/characterStorage.dart';
 import 'package:roll_n_read/models/ability.dart';
 import 'package:roll_n_read/models/character.dart';
@@ -80,7 +79,7 @@ class Logic{
         character = c;
         return character;
       } catch (e) {
-        print("Error: ${e}");
+        print("Error: $e");
         return null;
       }
   }

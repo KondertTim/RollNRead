@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:roll_n_read/models/class.dart';
 import 'package:roll_n_read/models/ability.dart';
 import 'package:roll_n_read/models/savingThrow.dart';

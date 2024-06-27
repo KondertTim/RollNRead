@@ -82,9 +82,14 @@ class _CenterAudioButtonState extends State<CenterAudioButton> {
                 elevation: 0
               ),
 
-              onPressed: (){
+              onPressed: () async {
                 Voice voice = Voice();
-                voice.listen();
+                voice.listen(context);
+                var value = await Future.wait(voice.listen(context) as Iterable<Future>);
+                print("object");
+
+
+
 
                 },
               child: Icon(Icons.mic_outlined, size: 250,color: isDarkMode ? Colors.black54 : Colors.white60),
