@@ -57,8 +57,6 @@ PODS:
     - GTMSessionFetcher/Core (< 4.0, >= 3.3.2)
     - MLImage (= 1.0.0-beta5)
     - MLKitCommon (~> 11.0)
-  - motion_sensors (0.0.1):
-    - Flutter
   - nanopb (2.30910.0):
     - nanopb/decode (= 2.30910.0)
     - nanopb/encode (= 2.30910.0)
@@ -81,7 +79,6 @@ DEPENDENCIES:
   - Flutter (from `Flutter`)
   - google_mlkit_commons (from `.symlinks/plugins/google_mlkit_commons/ios`)
   - google_mlkit_text_recognition (from `.symlinks/plugins/google_mlkit_text_recognition/ios`)
-  - motion_sensors (from `.symlinks/plugins/motion_sensors/ios`)
   - opencv_dart (from `.symlinks/plugins/opencv_dart/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/darwin`)
   - sensors_plus (from `.symlinks/plugins/sensors_plus/ios`)
@@ -112,8 +109,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/google_mlkit_commons/ios"
   google_mlkit_text_recognition:
     :path: ".symlinks/plugins/google_mlkit_text_recognition/ios"
-  motion_sensors:
-    :path: ".symlinks/plugins/motion_sensors/ios"
   opencv_dart:
     :path: ".symlinks/plugins/opencv_dart/ios"
   path_provider_foundation:
@@ -139,7 +134,6 @@ SPEC CHECKSUMS:
   MLKitTextRecognition: c83c18ad25496f2077f6ec93c5940487ff2eb343
   MLKitTextRecognitionCommon: c0b3a63d529296a19bce1f8bc8a513644ed4d1f6
   MLKitVision: e858c5f125ecc288e4a31127928301eaba9ae0c1
-  motion_sensors: 03f55b7c637a7e365a0b5f9697a449f9059d5d91
   nanopb: 438bc412db1928dac798aa6fd75726007be04262
   opencv_dart: 25b6a7c63435efdbd51c88a8682272662539bf7a
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46

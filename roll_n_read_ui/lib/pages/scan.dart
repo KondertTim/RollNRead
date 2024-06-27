@@ -1,18 +1,12 @@
 import 'dart:async';
-import 'dart:collection';
 import 'dart:io';
 import 'dart:math';
 import 'dart:typed_data';
-import 'package:collection/collection.dart';
-import 'package:file/file.dart';
-import 'package:file/memory.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:motion_sensors/motion_sensors.dart';
 import 'package:opencv_dart/opencv_dart.dart' as cv;
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:vector_math/vector_math_64.dart';
 
 class Scan extends StatefulWidget {
   const Scan({super.key, required this.cameras});
@@ -28,7 +22,8 @@ class _ScanState extends State<Scan>{
   late CameraDescription description;
 
   Image? image;
-  FileSystem fs = MemoryFileSystem();
+  int? detected;
+  DateTime lastOCR = DateTime(1990);
 
   @override
   void initState() {
@@ -74,7 +69,11 @@ class _ScanState extends State<Scan>{
     if(!controller.value.isInitialized) {
       return  const Scaffold(body: Center(child: Text("Could not initialize camera"),));
     }
-    return Scaffold(body: Center(child: image));
+    return Scaffold(body: Column(children: [
+      Expanded(child: Center(child: image)),
+      if(detected != null)
+        SizedBox(height: 100, child: Text(detected.toString(), style: TextStyle(fontSize: 70),),)
+    ],));
   }
 
   cv.Mat _parseFrame(CameraImage image) {
@@ -88,7 +87,6 @@ class _ScanState extends State<Scan>{
 
     // iOS uses bi-planar NV12 for YUV420
     // Android on the other hand produces IYUV/I420 on three planes
-
     if(Platform.isIOS) {
       convert = cv.COLOR_YUV2BGR_NV12;
     }
@@ -117,29 +115,25 @@ class _ScanState extends State<Scan>{
     return cv.imencode(".jpg", frame);
   }
 
-  static const _chars = 'AaBbCcDdEeFfGgHhIiJjKkLlMmNnOoPpQqRrSsTtUuVvWwXxYyZz1234567890';
-  final Random _rnd = Random();
-
-  String getRandomString(int length) => String.fromCharCodes(Iterable.generate(
-      length, (_) => _chars.codeUnitAt(_rnd.nextInt(_chars.length))));
-
-  Future<void> _runOCR(List<Uint8List> images) async {
+  Future<void> _runOCR(List<InputImage> images) async {
     final textRecognizer = TextRecognizer(script: TextRecognitionScript.latin);
+    final d20 = RegExp(r"^1?\d$|^20$");
 
     for(var image in images) {
-      File file = fs.file('${getRandomString(20)}_image.jpg')
-        ..writeAsBytesSync(image);
-      final RecognizedText recognizedText = await textRecognizer.processImage(InputImage.fromFile(file));
-      file.deleteSync();
-
+      final RecognizedText recognizedText = await textRecognizer.processImage(image);
       String text = recognizedText.text;
-      print(text);
+
+      if(d20.hasMatch(text)) {
+        print(text);
+        detected = int.parse(text);
+        return;
+      }
     }
   }
 
   void _updateFrame(Uint8List frame) {
     setState(() {
-      image = Image.memory(frame, gaplessPlayback: true);
+      image = Image.memory(frame, gaplessPlayback: true, fit: BoxFit.scaleDown);
     });
   }
 
@@ -162,12 +156,11 @@ class _ScanState extends State<Scan>{
     for(var p in points) {
       point_mask = cv.Mat.zeros(frame.height, frame.width, cv.MatType.CV_8UC1);
       cv.circle(point_mask, cv.Point(p.x.round(), p.y.round()), threshold, cv.Scalar.white, thickness: cv.FILLED);
-
       cv.bitwiseOR(mask, point_mask, dst: mask);
 
       var alone = true;
       for(var o in objects.values) {
-        if(mask.at<num>(p.y.round(), p.x.round()) != 0) {
+        if(o.at<num>(p.y.round(), p.x.round()) != 0) {
           cv.bitwiseOR(o, point_mask, dst: o);
           alone = false;
           break;
@@ -179,19 +172,38 @@ class _ScanState extends State<Scan>{
       }
     }
 
-    List<Uint8List> images = [];
-    for(var o in objects.entries) {
-      var contours = cv.findContours(o.value, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
-      frame = cv.drawContours(frame, contours.$1, -1, green);
+    if(DateTime.now().millisecondsSinceEpoch > (lastOCR.millisecondsSinceEpoch + 1000)) {
+      List<InputImage> images = [];
 
-      var obj = cv.cvtColor(frame, cv.COLOR_BGR2GRAY);
-      cv.bitwiseAND(o.value, obj, dst: obj);
-      cv.cvtColor(obj, cv.COLOR_GRAY2BGR, dst: obj);
-      Uint8List bytes = cv.imencode(".jpg", frame);
-      images.add(bytes);
+      for(var o in objects.entries) {
+        //var contours = cv.findContours(o.value, cv.RETR_EXTERNAL, cv.CHAIN_APPROX_SIMPLE);
+        //cv.drawContours(frame, contours.$1, -1, green);
+
+        var obj = cv.cvtColor(frame, cv.COLOR_BGR2GRAY);
+        cv.bitwiseAND(o.value, obj, dst: obj);
+
+        if(Platform.isIOS) {
+          cv.cvtColor(obj, cv.COLOR_GRAY2BGRA, dst: obj);
+        } else {
+          cv.cvtColor(obj, cv.COLOR_GRAY2BGR, dst: obj);
+          cv.cvtColor(obj, cv.COLOR_BGR2YUV_I420, dst: obj);
+        }
+
+        images.add(
+            InputImage.fromBytes(bytes: Uint8List.fromList(obj.data), metadata: InputImageMetadata(
+                size: Size(image.width.roundToDouble(), image.height.roundToDouble()),
+                rotation: InputImageRotation.rotation0deg,
+                format: Platform.isIOS ? InputImageFormat.bgra8888 : InputImageFormat.yuv_420_888,
+                bytesPerRow: obj.step
+            ))
+        );
+      }
+
+      _runOCR(images);
+      lastOCR = DateTime.now();
     }
 
-    _runOCR(images);
+    cv.drawKeyPoints(frame, kp.$1, frame, green, cv.DrawMatchesFlag.DEFAULT);
 
     var out = _produceFrame(frame);
     _updateFrame(out);
